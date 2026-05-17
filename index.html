@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estrellitas Fugaces — Cuidado infantil de confianza</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap");
+
+    :root {
+      --azul-marino: #0b1f3a;
+      --dorado: #d4a017;
+      --rojo-vino: #8b1e3f;
+      --celeste-suave: #a7c7e7;
+      --blanco: #f8fafc;
+      --sombra: rgba(11, 31, 58, 0.35);
+      --radio-xl: 1.5rem;
+      --radio-card: 1.25rem;
+      --transicion: 0.28s ease;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5.5rem;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", system-ui, -apple-system, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--blanco);
+      background-color: var(--azul-marino);
+      min-height: 100vh;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .contenedor {
+      width: min(100% - 1.5rem, 72rem);
+      margin-inline: auto;
+    }
+
+    .cabecera {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: linear-gradient(180deg, var(--azul-marino) 0%, rgba(11, 31, 58, 0.92) 100%);
+      border-bottom: 1px solid rgba(212, 160, 23, 0.35);
+      backdrop-filter: blur(8px);
+    }
+
+    .cabecera__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      flex-wrap: wrap;
+    }
+
+    .nav__check { position: absolute; opacity: 0; pointer-events: none; }
+    .nav__toggle {
+      display: flex; align-items: center; padding: 0.45rem 0.75rem; border-radius: 0.5rem;
+      border: 2px solid var(--dorado); background: rgba(212, 160, 23, 0.12); color: var(--celeste-suave);
+      font-family: inherit; font-weight: 800; font-size: 0.85rem; cursor: pointer; margin-left: auto;
+    }
+    .nav__lista {
+      display: none; flex-direction: column; gap: 0.2rem; list-style: none; margin: 0;
+      padding: 0.75rem 0 0; width: 100%; border-top: 1px solid rgba(212, 160, 23, 0.2);
+    }
+    .nav__check:checked ~ .nav__lista { display: flex; }
+    .nav__lista a {
+      display: block; padding: 0.5rem 0.65rem; border-radius: 0.5rem; text-decoration: none;
+      font-size: 0.88rem; font-weight: 700; color: var(--celeste-suave);
+    }
+    .nav__lista a:hover, .nav__lista a:focus-visible {
+      background: rgba(167, 199, 231, 0.15); color: var(--dorado);
+    }
+    @media (min-width: 56rem) {
+      .nav__toggle { display: none; }
+      .nav__check:checked ~ .nav__lista, .nav__lista {
+        display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-end;
+        width: auto; margin: 0; padding: 0; border: none; gap: 0.1rem 0.3rem;
+      }
+      .nav__lista a { padding: 0.35rem 0.5rem; font-size: 0.76rem; }
+      .cabecera__inner { flex-wrap: nowrap; }
+    }
+
+    .marca {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .marca__nombre {
+      font-family: "Nunito", system-ui, sans-serif;
+      font-weight: 800;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      letter-spacing: 0.02em;
+      color: var(--celeste-suave);
+    }
+
+    .marca__tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--dorado);
+    }
+
+    .principal {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(2.5rem, 6vw, 4rem);
+      padding-block: clamp(1.5rem, 4vw, 2.5rem) clamp(3rem, 8vw, 5rem);
+    }
+
+    .hero {
+      background: radial-gradient(
+          ellipse 120% 80% at 50% -20%,
+          rgba(167, 199, 231, 0.35),
+          transparent 55%
+        ),
+        var(--azul-marino);
+      border-radius: var(--radio-xl);
+      border: 1px solid rgba(212, 160, 23, 0.25);
+      padding: clamp(1.5rem, 5vw, 2.75rem);
+    }
+
+    .hero__layout {
+      display: grid;
+      gap: clamp(1.5rem, 4vw, 2.5rem);
+      align-items: center;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 52rem) {
+      .hero__layout {
+        grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+        gap: clamp(1.75rem, 3.5vw, 3rem);
+        align-items: center;
+      }
+    }
+
+    .hero__contenido {
+      display: grid;
+      gap: clamp(1.25rem, 3vw, 2rem);
+      min-width: 0;
+    }
+
+    .hero__marca {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-block: 0.25rem;
+    }
+
+    .hero__logo-marco {
+      width: min(20.5rem, 88vw);
+      max-width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--dorado);
+      box-shadow: 0 12px 32px var(--sombra), 0 0 0 1px rgba(167, 199, 231, 0.35);
+      background: var(--celeste-suave);
+      flex-shrink: 0;
+    }
+
+    .hero__logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .hero__titulo {
+      margin: 0;
+      font-family: "Nunito", system-ui, sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.85rem, 6vw, 2.75rem);
+      line-height: 1.15;
+      color: var(--celeste-suave);
+      text-wrap: balance;
+    }
+
+    .hero__titulo span {
+      color: var(--dorado);
+    }
+
+    .hero__lema {
+      margin: 0;
+      font-family: "Nunito", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.05rem, 3.5vw, 1.35rem);
+      color: var(--dorado);
+      max-width: 100%;
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      text-wrap: pretty;
+      line-height: 1.45;
+    }
+
+    .hero__texto {
+      margin: 0;
+      font-size: clamp(0.95rem, 2.8vw, 1.05rem);
+      color: #dce6f0;
+      max-width: 100%;
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      text-wrap: pretty;
+      line-height: 1.65;
+    }
+
+    .hero__detalles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: var(--celeste-suave);
+      color: var(--azul-marino);
+      border: 2px solid var(--dorado);
+    }
+
+    .seccion-titulo {
+      margin: 0 0 0.5rem;
+      font-family: "Nunito", system-ui, sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.45rem, 4vw, 1.85rem);
+      color: var(--celeste-suave);
+      text-wrap: balance;
+      line-height: 1.2;
+    }
+
+    .seccion-sub {
+      margin: 0 0 1.5rem;
+      font-size: 0.95rem;
+      color: #c5d4e8;
+      max-width: 100%;
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      text-wrap: pretty;
+      line-height: 1.65;
+    }
+
+
+    .bloque {
+      background: radial-gradient(ellipse 100% 60% at 50% -10%, rgba(167, 199, 231, 0.12), transparent 50%), rgba(11, 31, 58, 0.55);
+      border-radius: var(--radio-xl); border: 1px solid rgba(212, 160, 23, 0.25);
+      padding: clamp(1.5rem, 4.5vw, 2.75rem);
+    }
+    .horario-grid { display: grid; gap: 1rem; margin-top: 1.25rem; }
+    @media (min-width: 40rem) { .horario-grid { grid-template-columns: repeat(2, 1fr); } }
+    .horario-card {
+      background: rgba(167, 199, 231, 0.12); border: 2px solid rgba(212, 160, 23, 0.4);
+      border-radius: var(--radio-card); padding: 1.1rem 1.2rem;
+    }
+    .horario-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; color: var(--dorado); }
+    .horario-card p { margin: 0; color: #dce6f0; font-size: 0.95rem; }
+    .horario-card .hora { display: block; font-weight: 800; font-size: 1.15rem; color: var(--celeste-suave); margin-bottom: 0.35rem; }
+    .galeria-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-top: 1.25rem; }
+    @media (min-width: 48rem) { .galeria-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; } }
+    .galeria-item {
+      position: relative; border-radius: var(--radio-card); overflow: hidden; aspect-ratio: 4 / 3;
+      border: 2px solid rgba(212, 160, 23, 0.45); box-shadow: 0 8px 20px var(--sombra);
+    }
+    .galeria-item img { width: 100%; height: 100%; object-fit: cover; }
+    .galeria-item span {
+      position: absolute; inset: auto 0 0 0; padding: 0.5rem 0.65rem; font-size: 0.72rem; font-weight: 700;
+      background: linear-gradient(transparent, rgba(11, 31, 58, 0.9));
+    }
+    .pasos-grid { display: grid; gap: 1rem; margin-top: 1.25rem; }
+    @media (min-width: 48rem) { .pasos-grid { grid-template-columns: repeat(2, 1fr); } }
+    .paso {
+      display: flex; gap: 1rem; padding: 1rem; background: rgba(167, 199, 231, 0.1);
+      border-radius: var(--radio-card); border-left: 4px solid var(--dorado);
+    }
+    .paso__num {
+      flex-shrink: 0; width: 2.25rem; height: 2.25rem; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; background: var(--rojo-vino); color: var(--blanco); font-weight: 800;
+    }
+    .paso h3 { margin: 0 0 0.35rem; font-size: 1rem; color: var(--celeste-suave); }
+    .paso p { margin: 0; font-size: 0.9rem; color: #c5d4e8; text-align: justify; hyphens: auto; }
+    .bloque-con-imagen { display: grid; gap: 1.5rem; align-items: center; margin-top: 1rem; }
+    @media (min-width: 52rem) { .bloque-con-imagen { grid-template-columns: 1fr 1fr; } }
+    .bloque-con-imagen img {
+      border-radius: var(--radio-card); border: 3px solid rgba(212, 160, 23, 0.5);
+      box-shadow: 0 12px 28px var(--sombra); width: 100%; max-height: 18rem; object-fit: cover;
+    }
+    .camara-visual {
+      position: relative;
+      border-radius: var(--radio-card);
+      overflow: hidden;
+      border: 3px solid rgba(212, 160, 23, 0.5);
+      box-shadow: 0 12px 28px var(--sombra);
+      aspect-ratio: 4 / 3;
+      min-height: 14rem;
+      max-height: 20rem;
+      background: var(--azul-marino);
+    }
+    .camara-visual__fondo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .camara-visual__cam {
+      position: absolute;
+      top: 4%;
+      right: 4%;
+      width: min(42%, 11rem);
+      padding: 0.35rem;
+      border-radius: 0.65rem;
+      border: 2px solid var(--dorado);
+      box-shadow: 0 6px 18px rgba(11, 31, 58, 0.55);
+      object-fit: contain;
+      background: #fff;
+      aspect-ratio: 1;
+    }
+    .lista-dorada { margin: 1rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.85rem; }
+    .lista-dorada li {
+      padding: 0.75rem 0 0.75rem 1rem; border-left: 3px solid var(--dorado);
+      color: #c5d4e8; font-size: 0.92rem; text-align: justify; hyphens: auto;
+    }
+    .lista-dorada strong { display: block; color: var(--celeste-suave); margin-bottom: 0.25rem; }
+    .plataforma-mock {
+      margin-top: 1.25rem; padding: 1.25rem; border-radius: var(--radio-card);
+      background: var(--celeste-suave); color: var(--azul-marino); border: 3px solid var(--dorado);
+    }
+    .plataforma-mock h3 { margin: 0 0 0.75rem; font-size: 1.1rem; }
+    .plataforma-mock ul { margin: 0; padding-left: 1.2rem; font-size: 0.9rem; line-height: 1.7; }
+    .aviso-privacidad {
+      margin-top: 1rem; padding: 0.85rem 1rem; border-radius: 0.75rem;
+      background: rgba(139, 30, 63, 0.25); border: 1px solid rgba(212, 160, 23, 0.35);
+      font-size: 0.85rem; color: #e8d0d8; text-align: justify;
+    }
+    .grid-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 40rem) {
+      .grid-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 62rem) {
+      .grid-cards {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    .card {
+      --elevacion: 0 12px 28px var(--sombra);
+      background: var(--celeste-suave);
+      color: var(--azul-marino);
+      border-radius: var(--radio-card);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 26rem;
+      border: 3px solid rgba(212, 160, 23, 0.55);
+      box-shadow: var(--elevacion);
+      transition: transform var(--transicion), box-shadow var(--transicion), border-color var(--transicion);
+    }
+
+    .card:hover,
+    .card:focus-within {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(11, 31, 58, 0.45);
+      border-color: var(--dorado);
+    }
+
+    .card__media {
+      position: relative;
+      flex: 1 1 58%;
+      min-height: 14rem;
+      background: var(--azul-marino);
+    }
+
+    .card__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 12%;
+      min-height: 14rem;
+    }
+
+    .card__cuerpo {
+      flex: 0 0 auto;
+      padding: 1rem 1.1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      background: linear-gradient(180deg, var(--celeste-suave) 0%, #bfd8ef 100%);
+    }
+
+    .card__nombre {
+      margin: 0;
+      font-family: "Nunito", system-ui, sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--azul-marino);
+    }
+
+    .card__desc {
+      margin: 0;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #1a3355;
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      text-wrap: pretty;
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      margin-top: 0.35rem;
+      padding: 0.65rem 1rem;
+      border-radius: 999px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-align: center;
+      color: var(--blanco);
+      background: var(--rojo-vino);
+      border: 2px solid rgba(212, 160, 23, 0.7);
+      box-shadow: 0 4px 0 #050d18;
+      transition: background var(--transicion), transform var(--transicion), box-shadow var(--transicion);
+    }
+
+    .btn-wa:hover {
+      background: #9a2347;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #050d18;
+    }
+
+    .btn-wa:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 0 #050d18;
+    }
+
+    .seccion-extra {
+      background: linear-gradient(165deg, rgba(167, 199, 231, 0.14) 0%, rgba(11, 31, 58, 0.4) 45%, rgba(11, 31, 58, 0.85) 100%);
+      border: 1px solid rgba(212, 160, 23, 0.28);
+      border-radius: var(--radio-xl);
+      padding: clamp(1.5rem, 4.5vw, 2.75rem);
+    }
+
+    .seccion-extra__texto {
+      margin: 0 0 1.35rem;
+      color: #dce6f0;
+      font-size: clamp(0.92rem, 2.5vw, 1.05rem);
+      line-height: 1.68;
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      text-wrap: pretty;
+    }
+
+    .seccion-extra__lista {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: clamp(1rem, 2.5vw, 1.35rem);
+    }
+
+    .seccion-extra__lista li {
+      margin: 0;
+      padding: 0.85rem 0 0.85rem 1.1rem;
+      border-left: 3px solid var(--dorado);
+      color: #c5d4e8;
+      font-size: clamp(0.9rem, 2.4vw, 1rem);
+      line-height: 1.62;
+      text-align: justify;
+      text-align-last: left;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      text-wrap: pretty;
+    }
+
+    .seccion-extra__lista strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--celeste-suave);
+    }
+
+    .pie {
+      text-align: center;
+      padding: 1.5rem 1rem 2rem;
+      font-size: 0.8rem;
+      color: rgba(167, 199, 231, 0.65);
+      border-top: 1px solid rgba(212, 160, 23, 0.22);
+    }
+  </style>
+</head>
+<body>
+  <header class="cabecera">
+    <div class="contenedor cabecera__inner">
+      <div class="marca">
+        <span class="marca__tag">Guardería</span>
+        <span class="marca__nombre">Estrellitas Fugaces</span>
+      </div>
+      <nav class="nav" aria-label="Menú principal">
+        <input type="checkbox" id="nav-check" class="nav__check" aria-hidden="true">
+        <label for="nav-check" class="nav__toggle">Menú</label>
+        <ul class="nav__lista" id="nav-menu">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#horario">Horario</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#cuidadores">Cuidadores</a></li>
+          <li><a href="#camaras">Cámaras</a></li>
+          <li><a href="#atencion-especial">Atención especial</a></li>
+          <li><a href="#plataforma">Plataforma padres</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="contenedor principal">
+    <section class="bloque hero" id="inicio" aria-labelledby="titulo-principal">
+      <div class="hero__layout">
+        <div class="hero__contenido">
+          <h1 class="hero__titulo" id="titulo-principal">Estrellitas <span>Fugaces</span></h1>
+          <p class="hero__lema">Cuidamos su luz hoy para que iluminen mañana</p>
+          <p class="hero__texto">
+            Somos un servicio de cuidado infantil seguro y lleno de amor, pensado para acompañar a familias con largas jornadas laborales. Entornos tranquilos, protocolos claros y un equipo joven y capacitado para que cada niño y niña se sienta protegido, feliz y en confianza.
+          </p>
+          <div class="hero__detalles" role="list">
+            <span class="pill" role="listitem">Ambiente seguro</span>
+            <span class="pill" role="listitem">Cuidado con cariño</span>
+            <span class="pill" role="listitem">Horarios flexibles</span>
+          </div>
+        </div>
+        <div class="hero__marca">
+          <div class="hero__logo-marco">
+            <img class="hero__logo" src="images/logo-estrellitas-fugaces.png" alt="Logo Estrellitas Fugaces: cielo nocturno, estrella fugaz y lema de la guardería" width="560" height="560" loading="eager" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bloque" id="horario" aria-labelledby="titulo-horario">
+      <h2 class="seccion-titulo" id="titulo-horario">Horario de atención</h2>
+      <p class="seccion-sub">
+        Horarios pensados para familias con jornadas extendidas. Los horarios exactos de ingreso y retiro se confirman al matricular, según el plan contratado.
+      </p>
+      <div class="horario-grid">
+        <article class="horario-card">
+          <h3>Lunes a viernes</h3>
+          <span class="hora">6:30 a.m. – 6:30 p.m.</span>
+          <p>Cuidado regular con desayuno, almuerzo y merienda según el plan acordado con la familia.</p>
+        </article>
+        <article class="horario-card">
+          <h3>Sábados</h3>
+          <span class="hora">8:00 a.m. – 1:00 p.m.</span>
+          <p>Servicio con reserva previa para familias que necesitan apoyo puntual los fines de semana.</p>
+        </article>
+        <article class="horario-card">
+          <h3>Domingos y feriados</h3>
+          <span class="hora">Cerrado</span>
+          <p>Salvo eventos o cuidado especial programado con anticipación y cupos limitados.</p>
+        </article>
+        <article class="horario-card">
+          <h3>Servicio a domicilio</h3>
+          <span class="hora">Según disponibilidad</span>
+          <p>Coordinamos horarios flexibles para cuidado en casa; escríbenos por WhatsApp para consultar.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="bloque" id="galeria" aria-labelledby="titulo-galeria">
+      <h2 class="seccion-titulo" id="titulo-galeria">Nuestro ambiente de cuidado</h2>
+      <p class="seccion-sub">
+        Espacios luminosos, juego guiado y acompañamiento cercano. Creemos en un entorno donde los niños y las niñas se sientan seguros, escuchados y felices.
+      </p>
+      <div class="galeria-grid">
+        <figure class="galeria-item">
+          <img src="images/galeria-1.png" alt="Juego y estimulación temprana en cuidado infantil" width="800" height="600" loading="lazy" decoding="async">
+          <span>Juego y estimulación</span>
+        </figure>
+        <figure class="galeria-item">
+          <img src="images/galeria-2.webp" alt="Convivencia y cariño entre niños" width="800" height="600" loading="lazy" decoding="async">
+          <span>Convivencia y cariño</span>
+        </figure>
+        <figure class="galeria-item">
+          <img src="images/galeria-3.jpg" alt="Actividades y juegos guiados" width="800" height="600" loading="lazy" decoding="async">
+          <span>Actividades guiadas</span>
+        </figure>
+        <figure class="galeria-item">
+          <img src="images/galeria-4.webp" alt="Salón de guardería acogedor y ordenado" width="800" height="600" loading="lazy" decoding="async">
+          <span>Entorno acogedor</span>
+        </figure>
+        <figure class="galeria-item">
+          <img src="images/galeria-5.jpeg" alt="Ludoteca y espacios seguros para jugar" width="800" height="600" loading="lazy" decoding="async">
+          <span>Espacios seguros</span>
+        </figure>
+        <figure class="galeria-item">
+          <img src="images/galeria-6.webp" alt="Primera infancia con acompañamiento cercano" width="800" height="600" loading="lazy" decoding="async">
+          <span>Primera infancia</span>
+        </figure>
+      </div>
+    </section>
+
+    <section id="cuidadores" aria-labelledby="titulo-cuidadores">
+      <h2 class="seccion-titulo" id="titulo-cuidadores">Conoce a nuestros cuidadores</h2>
+      <p class="seccion-sub">
+        Tres perfiles para que conozcas quién puede acompañar a tu pequeño o pequeña. Elige con tranquilidad y escríbenos cuando quieras saber más.
+      </p>
+
+      <div class="grid-cards">
+        <article class="card">
+          <div class="card__media">
+            <img src="images/alessa-espinosa.jpeg" alt="Alessa Espinosa, cuidadora" width="800" height="1200" loading="lazy" decoding="async">
+          </div>
+          <div class="card__cuerpo">
+            <h3 class="card__nombre">Alessa Espinosa</h3>
+            <p class="card__desc">Comunicación clara y ambiente ordenado para que padres y pequeños sepan qué esperar en cada momento.</p>
+            <a class="btn-wa" href="https://wa.me/50767115830?text=Hola,%20quiero%20más%20información%20sobre%20el%20cuidado%20infantil" rel="noopener noreferrer" target="_blank">Más información</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__media">
+            <img src="images/isabella-moreno.jpeg" alt="Isabella Moreno, cuidadora" width="800" height="1200" loading="lazy" decoding="async">
+          </div>
+          <div class="card__cuerpo">
+            <h3 class="card__nombre">Isabella Moreno</h3>
+            <p class="card__desc">Energía positiva y juegos creativos que fomentan la confianza y el vínculo con las familias día a día.</p>
+            <a class="btn-wa" href="https://wa.me/50767115830?text=Hola,%20quiero%20más%20información%20sobre%20el%20cuidado%20infantil" rel="noopener noreferrer" target="_blank">Más información</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__media">
+            <img src="images/gabriela-anguizola.jpeg" alt="Gabriela Anguizola, cuidadora" width="800" height="1200" loading="lazy" decoding="async">
+          </div>
+          <div class="card__cuerpo">
+            <h3 class="card__nombre">Gabriela Anguizola</h3>
+            <p class="card__desc">Presencia tranquila y cercana; acompaña con paciencia para que cada niño y niña se sienta seguro y acompañado.</p>
+            <a class="btn-wa" href="https://wa.me/50767115830?text=Hola,%20quiero%20más%20información%20sobre%20el%20cuidado%20infantil" rel="noopener noreferrer" target="_blank">Más información</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="bloque" id="camaras" aria-labelledby="titulo-camaras">
+      <h2 class="seccion-titulo" id="titulo-camaras">Cámaras y tranquilidad para las familias</h2>
+      <p class="seccion-sub">
+        La seguridad visual complementa nuestro cuidado presencial. Las cámaras están pensadas para dar confianza a los padres, siempre con protocolos claros de privacidad y acceso restringido.
+      </p>
+      <div class="bloque-con-imagen">
+        <div>
+          <div class="pasos-grid">
+            <article class="paso">
+              <span class="paso__num">1</span>
+              <div>
+                <h3>Ubicación responsable</h3>
+                <p>Cámaras solo en áreas comunes de cuidado (salón, comedor, patio). Nunca en zonas de intimidad como baños o áreas de cambio.</p>
+              </div>
+            </article>
+            <article class="paso">
+              <span class="paso__num">2</span>
+              <div>
+                <h3>Acceso exclusivo para padres autorizados</h3>
+                <p>Cada familia recibe credenciales personales en la plataforma. Solo quienes figuren en la ficha del niño o niña pueden visualizar la transmisión.</p>
+              </div>
+            </article>
+            <article class="paso">
+              <span class="paso__num">3</span>
+              <div>
+                <h3>Visualización en tiempo real</h3>
+                <p>Desde la app o portal web, los padres pueden ver el espacio de cuidado durante el horario de servicio contratado, con conexión cifrada.</p>
+              </div>
+            </article>
+            <article class="paso">
+              <span class="paso__num">4</span>
+              <div>
+                <h3>Respaldo y protocolos</h3>
+                <p>Grabación temporal con fines de seguridad, supervisión del equipo directivo y registro de incidentes si fuera necesario, según normativa aplicable.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="camara-visual" role="img" aria-label="Salón de cuidado infantil con cámara de seguridad visible en la esquina superior">
+          <img class="camara-visual__fondo" src="images/galeria-4.webp" alt="" width="900" height="650" loading="lazy" decoding="async">
+          <img class="camara-visual__cam" src="images/camara-seguridad.jpg" alt="Cámara de seguridad" width="700" height="700" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <p class="aviso-privacidad">
+        La privacidad de cada niño y niña es prioritaria. El uso de cámaras se informa por escrito al inscribirse y puede consultarse en cualquier momento con nuestro equipo.
+      </p>
+    </section>
+
+    <section class="bloque" id="atencion-especial" aria-labelledby="titulo-atencion-especial">
+      <h2 class="seccion-titulo" id="titulo-atencion-especial">Atención para niños y niñas con necesidades especiales</h2>
+      <p class="seccion-sub">
+        Trabajamos con un enfoque inclusivo: cada pequeño es único. Diseñamos planes de acompañamiento que respetan su ritmo, sus sensibilidades y las indicaciones de su equipo médico o terapéutico.
+      </p>
+      <div class="bloque-con-imagen">
+        <img src="images/atencion-especial.png" alt="Atención y concentración en la primera infancia" width="800" height="600" loading="lazy" decoding="async">
+        <ul class="lista-dorada">
+          <li>
+            <strong>Plan individualizado</strong>
+            Evaluamos gustos, rutinas, alergias, medicación y necesidades de apoyo antes del primer día de cuidado.
+          </li>
+          <li>
+            <strong>Coordinación con especialistas</strong>
+            Comunicación fluida con terapeutas, neuropediatras o educadores que ya acompañan a la familia, con autorización de los padres.
+          </li>
+          <li>
+            <strong>Ambientes adaptados</strong>
+            Rincones de calma, materiales sensoriales y actividades graduadas para favorecer la regulación emocional.
+          </li>
+          <li>
+            <strong>Capacitación continua</strong>
+            Nuestro equipo recibe orientación para acompañar con paciencia, lenguaje claro y rutinas predecibles que generan confianza.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bloque" id="plataforma" aria-labelledby="titulo-plataforma">
+      <h2 class="seccion-titulo" id="titulo-plataforma">Plataforma de ingreso para padres</h2>
+      <p class="seccion-sub">
+        Centralizamos la información de cada familia en un portal seguro, para que el ingreso sea ordenado, rápido y transparente desde el primer contacto hasta el día a día del cuidado.
+      </p>
+      <div class="bloque-con-imagen">
+        <div>
+          <p class="seccion-sub" style="margin-bottom: 1rem;">
+            Al registrarse, los padres completan la ficha del niño o niña, suben documentos y autorizan quién puede retirarlo. Todo queda disponible para el equipo de Estrellitas Fugaces antes de iniciar el servicio.
+          </p>
+          <div class="plataforma-mock">
+            <h3>¿Qué incluye la plataforma?</h3>
+            <ul>
+              <li>Registro en línea de datos del niño, contactos y personas autorizadas</li>
+              <li>Carga de carné de salud, alergias y autorizaciones médicas</li>
+              <li>Calendario de asistencia y avisos de llegada o retiro</li>
+              <li>Mensajes con cuidadores y equipo administrativo</li>
+              <li>Acceso a cámaras (solo padres autorizados)</li>
+              <li>Resumen diario de actividades, comidas y descanso</li>
+            </ul>
+          </div>
+        </div>
+        <img src="images/plataforma-padres.jpg" alt="Padre e hijo usando tableta, plataforma para familias" width="800" height="600" loading="lazy" decoding="async">
+      </div>
+    </section>
+
+    <section class="bloque seccion-extra" id="servicios" aria-labelledby="titulo-servicios">
+      <h2 class="seccion-titulo" id="titulo-servicios">Servicios y acompañamiento</h2>
+      <p class="seccion-extra__texto">
+        En Estrellitas Fugaces entendemos que cada niño y cada familia son distintos. Por eso adaptamos el cuidado al carácter, los gustos y las necesidades de cada pequeño, respetando su ritmo y el de su hogar, para que el día a día sea cercano, previsible y lleno de confianza.
+      </p>
+      <ul class="seccion-extra__lista">
+        <li>
+          <strong>Cuidado personalizado</strong>
+          Ajustamos rutinas, juegos y formas de acompañar según lo que mejor funcione para vuestro hijo o hija, siempre con comunicación clara con las familias.
+        </li>
+        <li>
+          <strong>Servicio móvil a domicilio</strong>
+          También ofrecemos cuidado en casa cuando lo necesitéis: un servicio móvil que lleva el mismo enfoque seguro y cariñoso al entorno familiar, ideal para combinar con vuestra agenda.
+        </li>
+        <li>
+          <strong>Apoyo de psicología infantil</strong>
+          Contamos con el respaldo de psicólogas y psicólogos especializados en primera infancia para orientar a las familias, acompañar etapas importantes o conversar cuando surjan dudas sobre el bienestar emocional de los más pequeños.
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="pie contenedor">
+    <p>© Estrellitas Fugaces — Un espacio seguro para crecer.</p>
+  </footer>
+</body>
+</html>

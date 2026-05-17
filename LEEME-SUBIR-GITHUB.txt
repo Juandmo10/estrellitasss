@@ -1,0 +1,55 @@
+ESTRELLITAS FUGACES — Listo para subir a GitHub
+==============================================
+
+Carpeta a subir: todo el contenido de esta carpeta (o la copia en Desktop/estrellitas).
+
+PASO 1 — Descargar las imágenes de la web (obligatorio antes de subir)
+----------------------------------------------------------------------
+Doble clic en:  descargar-imagenes.command
+
+Si alguna imagen falla, ábrela en Chrome con el enlace del script,
+clic derecho → Guardar imagen como…  dentro de la carpeta  images/
+
+Deben quedar estos archivos en images/:
+  galeria-1.png
+  galeria-2.webp
+  galeria-3.jpg
+  galeria-4.webp
+  galeria-5.jpeg
+  galeria-6.webp
+  camara-seguridad.jpg
+  atencion-especial.png
+  plataforma-padres.jpg
+  logo-estrellitas-fugaces.png
+  alessa-espinosa.jpeg
+  isabella-moreno.jpeg
+  gabriela-anguizola.jpeg
+
+PASO 2 — Subir a GitHub
+-----------------------
+En github.com crea el repositorio vacío:  estrellitas
+
+Sube:
+  - index.html   (en la raíz)
+  - carpeta images/   (completa, con todos los archivos de arriba)
+
+NO subas las fotos sueltas en la raíz del repo; deben ir dentro de images/
+
+PASO 3 — Activar GitHub Pages (sitio en internet gratis)
+--------------------------------------------------------
+Repo → Settings → Pages → Branch: main → Folder: / (root) → Save
+
+Tu sitio quedará en:
+  https://TU_USUARIO.github.io/estrellitas/
+
+PASO 4 — Subir con Terminal (opcional)
+--------------------------------------
+cd ~/Desktop/estrellitas
+git init
+git add index.html images/
+git commit -m "Sitio Estrellitas Fugaces"
+git branch -M main
+git remote add origin https://github.com/TU_USUARIO/estrellitas.git
+git push -u origin main
+
+(Reemplaza TU_USUARIO por tu usuario de GitHub, por ejemplo Juandmo10)

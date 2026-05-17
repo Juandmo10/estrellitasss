@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" role="img" aria-label="Cámara de seguridad">
+  <rect width="200" height="140" rx="12" fill="#0B1F3A"/>
+  <rect x="118" y="14" width="68" height="52" rx="10" fill="#2a3f5c" stroke="#D4A017" stroke-width="3"/>
+  <ellipse cx="152" cy="40" rx="22" ry="16" fill="#1a2d47" stroke="#A7C7E7" stroke-width="2"/>
+  <circle cx="152" cy="40" r="9" fill="#111"/>
+  <circle cx="156" cy="36" r="3" fill="rgba(255,255,255,0.35)"/>
+  <rect x="140" y="58" width="24" height="10" rx="3" fill="#D4A017"/>
+  <path d="M152 68v22" stroke="#A7C7E7" stroke-width="4" stroke-linecap="round"/>
+  <path d="M132 90h40" stroke="#A7C7E7" stroke-width="4" stroke-linecap="round"/>
+</svg>
